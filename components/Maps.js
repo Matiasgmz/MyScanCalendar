@@ -3,8 +3,28 @@ import { Text, View } from 'react-native'
 import MapView, { Marker } from 'react-native-maps';
 
 import * as Location from "expo-location"
+import axios from 'axios';
 
 export default function Maps() {
+
+
+    const [users, setUsers] = useState([]);
+
+    const fetchUsers = async () => {
+        try {
+            const response = await axios.get('http://10.74.0.59:3000/users');
+            setUsers(response.data);
+        } catch (error) {
+            console.error('Error fetching users:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchUsers();
+    }, []); // Empty dependency array ensures the effect runs only once after initial render.
+
+
+
 
     const [location, setLocation] = useState(null);
     const [distance, setDistance] = useState(null);
@@ -46,7 +66,7 @@ export default function Maps() {
     return (
 
         <View style={{ flex: 1 }}>
-          
+
             {location && (
                 <MapView style={{ flex: 1 }}
                     initialRegion={
@@ -59,17 +79,14 @@ export default function Maps() {
                     }
                 >
 
-                    <Marker coordinate={{
-                        latitude: location.latitude,
-                        longitude: location.longitude,
-                    }}
-                        title='Votre position' />
+                    {users.map((user, index) => (
 
-                    <Marker coordinate={{
-                        latitude: 49.27894800,
-                        longitude: 2.46468800,
-                    }}
-                        title='Position 2' />
+                        <Marker coordinate={{
+                            latitude: user.latitude,
+                            longitude: user.longitude,
+                        }}
+                            title={user.last + " " + user.first} />
+                    ))}
 
                 </MapView>
             )}

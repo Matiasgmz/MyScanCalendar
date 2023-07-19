@@ -23,8 +23,8 @@ console.log(route)
         <SafeAreaView>
             <ScrollView>
                 <View style={{ padding: 20 }}>
-                    {users.map((user) => (
-                        <View style={styles.user}>
+                    {users.map((user, index) => (
+                        <View key={index} style={styles.user}>
                             <Image
                                 style={styles.image}
                                 resizeMode="cover"
