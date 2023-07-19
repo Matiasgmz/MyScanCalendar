@@ -6,10 +6,10 @@ import { Ionicons } from '@expo/vector-icons';
 import ListUser from "./ListUser";
 
 
-export default function Home() {
+export default function Home({ route }) {
 
     return (
-        <ListUser />
+        <ListUser route={route} />
     )
 }
 

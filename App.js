@@ -16,7 +16,7 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator activeColor="black"
         inactiveColor="#3e2465"
-        barStyle={{ backgroundColor: 'white', height: 80 }} >
+        barStyle={{ backgroundColor: 'white', height: 80 }} screenOptions={{ headerShown: false }}>
 
         <Tab.Screen
           name="Home"

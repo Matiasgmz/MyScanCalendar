@@ -1,11 +1,30 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ScrollView, TextInput, StyleSheet, SafeAreaView, Text, View } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import SelectDropdown from 'react-native-select-dropdown'
 import { Ionicons } from '@expo/vector-icons';
 import { Button } from '@rneui/themed';
+import axios from 'axios';
 
 export default function FormAddEvent() {
+
+
+    const [users, setUsers] = useState([]);
+
+    const fetchUsers = async () => {
+        try {
+            const response = await axios.get('http://10.74.0.59:3000/users');
+            setUsers(response.data);
+        } catch (error) {
+            console.error('Error fetching users:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchUsers();
+    }, []); // Empty dependency array ensures the effect runs only once after initial render.
+
+
 
     const [date, setDate] = useState(new Date(1598051730000));
 
@@ -14,10 +33,6 @@ export default function FormAddEvent() {
 
         setDate(currentDate);
     };
-
-
-    // a supprimer
-    const countries = ["Egypt", "Canada", "Australia", "Ireland"]
 
     return (
         <SafeAreaView style={{ marginTop: 100, alignSelf: 'center' }}>
@@ -32,9 +47,11 @@ export default function FormAddEvent() {
                     }}
                     dropdownIconPosition={'right'}
 
-                    data={countries}
+                    data={users.map((user) => `${user.first} ${user.last}`)}
                     onSelect={(selectedItem, index) => {
-                        console.log(selectedItem, index)
+                    
+                        const selectedUser = users[index];
+                        console.log(selectedUser.id);
                     }}
                     buttonTextAfterSelection={(selectedItem, index) => {
                         return selectedItem
