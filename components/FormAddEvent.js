@@ -72,6 +72,7 @@ export default function FormAddEvent() {
                     mode={'date'}
                     is24Hour={true}
                     onChange={onChange}
+                    locale='fr'
                 />
 
                 <DateTimePicker
