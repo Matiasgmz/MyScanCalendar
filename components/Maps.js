@@ -81,7 +81,7 @@ export default function Maps() {
 
                     {users.map((user, index) => (
 
-                        <Marker coordinate={{
+                        <Marker key={index} coordinate={{
                             latitude: user.latitude,
                             longitude: user.longitude,
                         }}
